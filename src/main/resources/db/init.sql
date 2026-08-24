@@ -1,5 +1,3 @@
-USE mainichi_pos;
-
 -- Limpieza preventiva
 DROP PROCEDURE IF EXISTS sp_cerrar_turno;
 DROP PROCEDURE IF EXISTS sp_abrir_turno;
