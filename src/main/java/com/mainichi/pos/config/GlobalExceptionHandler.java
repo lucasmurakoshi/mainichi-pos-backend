@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
             "timestamp", LocalDateTime.now(),
             "status", HttpStatus.BAD_REQUEST.value(),
             "error", "Regla de Negocio",
-            "message", ex.getMessage()
+            "message", ex.getMessage() != null ? ex.getMessage() : "Error en regla de negocio"
         ));
     }
 
@@ -29,21 +29,24 @@ public class GlobalExceptionHandler {
             "timestamp", LocalDateTime.now(),
             "status", HttpStatus.NOT_FOUND.value(),
             "error", "No Encontrado",
-            "message", ex.getMessage()
+            "message", ex.getMessage() != null ? ex.getMessage() : "Recurso no encontrado"
         ));
     }
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
-        // Re-throw Spring MVC framework exceptions to be handled by Spring itself
         if (ex instanceof ErrorResponseException) {
             throw (ErrorResponseException) ex;
+        }
+        String detailedMessage = ex.getMessage();
+        if (ex.getCause() != null && ex.getCause().getMessage() != null) {
+            detailedMessage = (detailedMessage != null ? detailedMessage + " -> " : "") + ex.getCause().getMessage();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
             "timestamp", LocalDateTime.now(),
             "status", HttpStatus.INTERNAL_SERVER_ERROR.value(),
             "error", "Error Interno",
-            "message", ex.getMessage()
+            "message", detailedMessage != null ? detailedMessage : "Error interno del servidor"
         ));
     }
 }
