@@ -5,9 +5,9 @@ spring:
   application:
     name: mainichi-pos-api
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://${DB_HOST:${MYSQLHOST:${RAILWAY_TCP_PROXY_DOMAIN:localhost}}}:${DB_PORT:${MYSQLPORT:${RAILWAY_TCP_PROXY_PORT:3306}}}/${DB_NAME:${MYSQLDATABASE:${MYSQL_DATABASE:mainichi_pos}}}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    username: ${DB_USER:${MYSQLUSER:root}}
-    password: ${DB_PASSWORD:${MYSQLPASSWORD:${MYSQL_ROOT_PASSWORD:root}}}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${MYSQLUSER:root}
+    password: ${MYSQLPASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 logging:
